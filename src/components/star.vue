@@ -16,6 +16,10 @@
       score: {
         type: Number,
         default: 0
+      },
+      length: {
+        type: Number,
+        default: 10
       }
     },
     computed: {

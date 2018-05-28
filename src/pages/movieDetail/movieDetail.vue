@@ -28,13 +28,14 @@
       </div>
     </div>
     <div class="reviews-wrapper" v-if="this.reviews">
-
+      <Reviews :reviews="reviews"></Reviews>
     </div>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
   import Star from '../../components/star.vue'
+  import Reviews from '../../components/reviews.vue'
 
   export default{
     data(){
@@ -687,7 +688,8 @@
       }
     },
     components: {
-      Star
+      Star,
+      Reviews
     }
   }
 </script>
