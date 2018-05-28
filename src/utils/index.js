@@ -1,3 +1,5 @@
+import Movie from '../common/js/Movie'
+
 function formatNumber (n) {
   const str = n.toString()
   return str[1] ? str : `0${str}`
@@ -31,4 +33,22 @@ export function showSuccess (text) {
     title: text,
     icon: 'success'
   })
+}
+
+export function filterMovies (movies) {
+  return movies.map(item => {
+    return new Movie({id: item.id, title: item.title, images: item.images})
+  })
+}
+
+export function isNumber (obj) {
+  return Object.prototype.toString.call(obj) === '[object Number]'
+}
+
+/**
+ * @param num 传入一个数字
+ * @returns {boolean} true 是小数
+ */
+export function isDecimalNum (num) {
+  return String(num).indexOf('.') !== -1
 }
