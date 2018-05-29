@@ -6,7 +6,8 @@
       </swiper-item>
     </swiper>
     <border-line></border-line>
-    <movie-list :listTitle="in_theaters_title" :movies="in_theaters_movies"></movie-list>
+    <movie-list :listTitle="in_theaters_title" :movies="in_theaters_movies"
+                @navigateToMovieDetail="navigateToMovieDetail"></movie-list>
     <border-line></border-line>
     <movie-list :listTitle="in_theaters_title" :movies="in_theaters_movies"></movie-list>
     <border-line></border-line>
@@ -1794,7 +1795,13 @@
       this.in_theaters_movies = filterMovies(this.in_theaters_movies)
       console.log(this.in_theaters_movies)
     },
-    methods: {},
+    methods: {
+      navigateToMovieDetail(id){
+        wx.navigateTo({
+          url: '/pages/movieDetail/main?id=' + id
+        })
+      }
+    },
     components: {
       MovieList,
       BorderLine

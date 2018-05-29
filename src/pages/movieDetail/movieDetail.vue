@@ -8,7 +8,7 @@
         <span class="info-item-text">评分:</span>
         {{movieDetail.score === 0 ? '暂无' : movieDetail.score}}
         <div class="star-wrapper">
-          <star :score="movieDetail.score"></star>
+          <star length="10" :score="movieDetail.score"></star>
         </div>
       </div>
       <div class="info-item movie-directors">
@@ -23,12 +23,14 @@
         <p class="summary-title">摘要:</p>
         <p class="summary-text">{{movieDetail.summary}}</p>
       </div>
+      <section-header title="预告片" v-if="movieDetail.trailer_url"></section-header>
       <div class="video-wrapper" v-if="movieDetail.trailer_url">
         <video id="myVideo" :src="movieDetail.trailer_url" controls="true"></video>
       </div>
     </div>
-    <div class="reviews-wrapper" v-if="this.reviews">
-      <Reviews :reviews="reviews"></Reviews>
+    <section-header title="精选评论" v-if="reviews"></section-header>
+    <div class="reviews-wrapper" v-if="reviews">
+      <Reviews :reviews="reviews" @goToReviewDetail="goToReviewDetail"></Reviews>
     </div>
   </div>
 </template>
@@ -36,6 +38,7 @@
 <script type="text/ecmascript-6">
   import Star from '../../components/star.vue'
   import Reviews from '../../components/reviews.vue'
+  import SectionHeader from '../../components/section-header.vue'
 
   export default{
     data(){
@@ -44,7 +47,7 @@
         movieDetail: {
           "rating": {
             "max": 10,
-            "average": 7.3,
+            "average": 2.3,
             "details": {
               "1": 112.0,
               "2": 569.0,
@@ -660,14 +663,16 @@
             "星战外传2"
           ]
 
-        }
+        },
+        reviews: []
       }
     },
     mounted(){
       this.id = this.$root.$mp.query.id
-      this.movieDetail = this.filterMovieDetail(this.movieDetail)
+      // 先过滤出reviews 在过滤出movieDetail
       this.reviews = this.filterMovieRevies(this.movieDetail)
-      console.log(this.movieDetail)
+      this.movieDetail = this.filterMovieDetail(this.movieDetail)
+//      console.log(this.reviews)
     },
     methods: {
       filterMovieDetail(movieDetail){
@@ -684,18 +689,25 @@
         }
       },
       filterMovieRevies(movieDetail){
-        return movieDetail.popular_reviews
+        return movieDetail.popular_reviews || []
+      },
+      goToReviewDetail(id){
+        wx.navigateTo({
+          url: '/pages/reviewDetail/main?id=' + id
+        })
       }
     },
     components: {
       Star,
-      Reviews
+      Reviews,
+      SectionHeader
     }
   }
 </script>
 
 <style lang="less" scoped rel="stylesheet/less">
   .movie-page {
+    width: 100%;
     .movie-detail-bg {
       position: fixed;
       left: 0;
@@ -709,7 +721,7 @@
       opacity: .2;
     }
     .movie-info-wrapper {
-      padding: 20px 10% 10px 10%;
+      padding: 20px 20px 10px 20px;
       .poster-img {
         height: 400px;
         width: 100%;
@@ -745,7 +757,8 @@
         }
       }
       .summary {
-        margin-top: 20px;
+        margin-top: 10px;
+        margin-bottom: 14px;
         .summary-title {
           font-weight: 600;
           font-size: 14px;
@@ -759,7 +772,7 @@
         }
       }
       .video-wrapper {
-        margin-top: 25px;
+        margin-top: 10px;
       }
     }
     .reviews-wrapper {

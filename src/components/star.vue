@@ -6,7 +6,6 @@
 
 <script type="text/ecmascript-6">
   import { isDecimalNum } from '../utils/index'
-  const LENGTH = 10
   const CLS_ON = 'on'
   const CLS_HALF = 'half'
   const CLS_OFF = 'off'
@@ -22,6 +21,11 @@
         default: 10
       }
     },
+    data(){
+      return {
+        length: this.length
+      }
+    },
     computed: {
       stars(){
         let result = []
@@ -32,7 +36,7 @@
         if (isDecimalNum(this.score)) {
           result.push(CLS_HALF)
         }
-        while (result.length < LENGTH) {
+        while (result.length < this.length) {
           result.push(CLS_OFF)
         }
         return result

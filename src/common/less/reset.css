@@ -135,6 +135,6 @@ body {
 }
 body,
 html {
-  font-family: 'PingFang SC', 'STHeitiSC-Light', 'Helvetica-Light', arial, sans-serif, 'Droid Sans Fallback';
+  font-family: "Microsoft YaHei", "黑体", "宋体", sans-serif, "Arial";
   font-weight: 200;
 }

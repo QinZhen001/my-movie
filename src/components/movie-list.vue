@@ -5,7 +5,7 @@
       <img src="../../static/img/arrowright.png" alt="">
     </div>
     <scroll-view class="scroll-view" scroll-x="true">
-      <div class="movie-item" v-for="movie in movies" :key="movie.id" @click="navigateToMovieDetail(movie.id)">
+      <div class="movie-item" v-for="movie in movies" :key="movie.id" @click.stop="clickMovieItem(movie.id)">
         <img :src="movie.images.small" alt="">
         <h5 class="movie-title">{{movie.title}}</h5>
       </div>
@@ -24,11 +24,8 @@
       }
     },
     methods: {
-      navigateToMovieDetail(id){
-//        console.log(id)
-        wx.navigateTo({
-          url: '/pages/movieDetail/main?id=' + id
-        })
+      clickMovieItem(id){
+        this.$emit('navigateToMovieDetail', id)
       }
     }
   }
