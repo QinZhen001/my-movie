@@ -65,7 +65,10 @@
           height: 125px;
         }
         .movie-title {
+          line-height: 12px;
+          height: 12px;
           font-size: 10px;
+          color: #353535;
           overflow: hidden;
           white-space: nowrap;
           text-overflow: ellipsis;

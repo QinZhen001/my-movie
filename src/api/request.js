@@ -12,7 +12,7 @@ export function request (url, method = 'GET', data, header = {}) {
         if (res.statusCode === 200) {
           resolve(res.data)
         } else {
-          showModal('失败', res.errMsg)
+          showModal('失败')
           reject(res.data)
         }
       },

@@ -1,5 +1,3 @@
-import Movie from '../common/js/Movie'
-
 function formatNumber (n) {
   const str = n.toString()
   return str[1] ? str : `0${str}`
@@ -36,9 +34,7 @@ export function showSuccess (text) {
 }
 
 export function filterMovies (movies) {
-  return movies.map(item => {
-    return new Movie({id: item.id, title: item.title, images: item.images})
-  })
+  return movies.subjects
 }
 
 export function isNumber (obj) {
@@ -51,4 +47,27 @@ export function isNumber (obj) {
  */
 export function isDecimalNum (num) {
   return String(num).indexOf('.') !== -1
+}
+
+export function debounce (func, delay) {
+  let timer
+  return function (...args) {
+    if (timer) {
+      clearTimeout(timer)
+    }
+    timer = setTimeout(() => {
+      func.apply(this, args)
+    }, delay)
+  }
+}
+
+export function isLeapYear () {
+  const year = new Date().getFullYear()
+  if (year % 400 === 0) {
+    return true
+  } else if (year % 4 === 0 && year % 100 !== 0) {
+    return true
+  } else {
+    return false
+  }
 }

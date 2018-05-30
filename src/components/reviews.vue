@@ -93,6 +93,7 @@
           font-size: 12px;
           line-height: 16px;
           text-overflow: ellipsis;
+          color: #353535;
         }
         .star-wrapper {
           margin-top: 8px;
