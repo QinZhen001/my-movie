@@ -2,23 +2,42 @@
   <scroll-view class="movie-page" scroll-y="true">
     <swiper class="slider" indicator-dots="true" autoplay="true" circular="true">
       <swiper-item class="slider-item" v-for="item in sliders" :key="item">
-        <img src="../../../static/img/slider.jpg" alt="">
+        <img :src="item" alt="">
       </swiper-item>
     </swiper>
     <border-line></border-line>
-    <movie-list :listTitle="in_theaters_title" :movies="in_theaters_movies"
-                @navigateToMovieDetail="navigateToMovieDetail"></movie-list>
+    <movie-list :listTitle="in_theaters_title"
+                :movies="in_theaters_movies"
+                v-if="in_theaters_movies"
+                @navigateToMovieDetail="navigateToMovieDetail">
+
+    </movie-list>
     <border-line></border-line>
-    <movie-list :listTitle="coming_soon_title" :movies="coming_soon_movies"
-                @navigateToMovieDetail="navigateToMovieDetail"></movie-list>
+    <movie-list :listTitle="coming_soon_title"
+                :movies="coming_soon_movies"
+                v-if="coming_soon_movies"
+                @navigateToMovieDetail="navigateToMovieDetail">
+
+    </movie-list>
     <border-line></border-line>
-    <movie-list :listTitle="new_movies_title" :movies="new_movies"></movie-list>
+    <movie-list :listTitle="new_movies_title"
+                :movies="new_movies"
+                v-if="new_movies"
+                @navigateToMovieDetail="navigateToMovieDetail">
+
+    </movie-list>
     <border-line></border-line>
-    <movie-list :listTitle="top250_movies_title" :movies="top250_movies"></movie-list>
+    <movie-list :listTitle="top250_movies_title"
+                :movies="top250_movies"
+                v-if="top250_movies"
+                @navigateToMovieDetail="navigateToMovieDetail">
+
+    </movie-list>
   </scroll-view>
 </template>
 
 <script type="text/ecmascript-6">
+  import { shareInfo } from '../../common/js/data'
   import { request } from '../../api/request'
   import MovieList from '../../components/movie-list.vue'
   import BorderLine from '../../components/border-line.vue'
@@ -27,14 +46,14 @@
   export default{
     data(){
       return {
-        sliders: ['', '', ''],
-        in_theaters_title: '正在上映的电影 -北京',
+        sliders: ['/static/img/slider1.jpg', '/static/img/slider2.jpg', '/static/img/slider3.jpg'],
+        in_theaters_title: '正在上映的电影 —北京',
         in_theaters_movies: [],
         coming_soon_title: '即将上映的电影',
         coming_soon_movies: [],
         new_movies_title: '新片排行榜',
         new_movies: [],
-        top250_movies_title: '新片排行榜',
+        top250_movies_title: 'Top250电影',
         top250_movies: []
       }
     },
@@ -43,7 +62,7 @@
     },
     methods: {
       async getMoviesData(){
-        wx.showLoading({ title: '玩命加载中...' })
+        wx.showLoading({title: '玩命加载中...'})
         const inTheaters = await request('/v2/movie/in_theaters')
         this.in_theaters_movies = filterMovies(inTheaters)
         const comingSoon = await request('/v2/movie/coming_soon')
@@ -64,6 +83,9 @@
     components: {
       MovieList,
       BorderLine
+    },
+    onShareAppMessage (res) {
+      return shareInfo
     }
   }
 </script>

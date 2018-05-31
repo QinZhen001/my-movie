@@ -12,11 +12,11 @@
   .no-result {
     text-align: center;
     .no-result-icon {
-      width: 100px;
-      height: 100px;
+      width: 156px;
+      height: 156px;
       margin: 0 auto;
       background-image: url("../../static/img/no-result.png");
-      background-size: 100px 100px;
+      background-size: 156px 156px;
     }
   }
 </style>

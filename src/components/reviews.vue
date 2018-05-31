@@ -1,14 +1,14 @@
 <template>
   <ul class="reviews">
-    <li class="review-item" v-for="review in reviews" :key="review.subject_id">
-      <img class="review-avatar" :src="review.author.avatar" alt="">
+    <li class="review-item" v-for="review in reviews" :key="review.id">
+      <img class="review-avatar" :src="review.authorAvatar" alt="">
       <div class="review-content">
-        <span class="review-username">{{review.author.name}}</span>
-        <span class="review-go-detail" @click.stop="clickDetail(review.subject_id)">详情<img
+        <span class="review-username">{{review.authorName}}</span>
+        <span class="review-go-detail" @click.stop="clickDetail(review.id)">详情<img
           src="../../static/img/right-arrow.png" alt=""></span>
         <p class="review-summary">{{review.summary}}</p>
         <div class="star-wrapper">
-          <star length="5" :score="review.rating.value"></star>
+          <star length="5" :score="review.score"></star>
         </div>
       </div>
     </li>
@@ -45,17 +45,26 @@
       display: flex;
       flex-direction: row;
       align-items: center;
+      &:last-child {
+        .review-content {
+          &::after {
+            height: 1px;
+            border: none;
+          }
+        }
+      }
       .review-avatar {
-        flex: 0 0 32px;
-        width: 32px;
-        height: 32px;
+        flex: 0 0 34px;
+        width: 34px;
+        height: 34px;
         border-radius: 50%;
       }
       .review-content {
-        margin-left: 10px;
+        margin-left: 8px;
         flex: 1 1 auto;
         position: relative;
         &::after {
+          content: '';
           position: absolute;
           bottom: -12px;
           left: 0;
@@ -63,7 +72,6 @@
           display: block;
           width: 100%;
           height: 0;
-          content: '';
           border-bottom: 1px solid #bbb;
         }
         .review-username {

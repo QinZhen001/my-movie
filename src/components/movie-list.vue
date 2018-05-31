@@ -1,7 +1,7 @@
 <template>
   <div class="movie-list">
-    <div class="title">
-      <span>{{listTitle}}</span>
+    <div class="header">
+      <span class="header-title">{{listTitle}}</span>
       <img src="../../static/img/arrowright.png" alt="">
     </div>
     <scroll-view class="scroll-view" scroll-x="true">
@@ -34,18 +34,20 @@
 <style lang="less" scoped rel="stylesheet/less">
   .movie-list {
     padding: 8px;
-    .title {
+    .header {
       position: relative;
       width: 100%;
-      height: 20px;
-      line-height: 20px;
-      span {
+      height: 16px;
+      line-height: 16px;
+      .header-title {
         display: inline-block;
-        font-size: 14px;
+        vertical-align: top;
+        font-size: 12px;
+        color: #353535;
       }
       img {
         position: absolute;
-        top: 3px;
+        top: 1px;
         right: 5px;
         display: inline-block;
         width: 14px;

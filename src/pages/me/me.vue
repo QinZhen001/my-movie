@@ -18,6 +18,7 @@
 </template>
 
 <script type="text/ecmascript-6">
+  import { shareInfo } from '../../common/js/data'
   import BorderLine from '../../components/border-line.vue'
   import YearProgress from '../../components/year-progress.vue'
   import * as echarts from 'echarts'
@@ -180,6 +181,9 @@
       BorderLine,
       YearProgress,
       mpvueEcharts
+    },
+    onShareAppMessage (res) {
+      return shareInfo
     }
   }
 </script>

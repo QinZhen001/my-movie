@@ -36,6 +36,8 @@
 </template>
 
 <script type="text/ecmascript-6">
+  import { shareInfo } from '../../common/js/data'
+  import { request } from '../../api/request'
   import Star from '../../components/star.vue'
   import Reviews from '../../components/reviews.vue'
   import SectionHeader from '../../components/section-header.vue'
@@ -43,39 +45,52 @@
   export default{
     data(){
       return {
-        id: '',
+        movieId: '',
         movieDetail: {},
         reviews: []
       }
     },
     mounted(){
-      this.id = this.$root.$mp.query.id
-      // 先过滤出reviews 在过滤出movieDetail
-      this.getMovie
-      this.reviews = this.filterMovieRevies(this.movieDetail)
-      this.movieDetail = this.filterMovieDetail(this.movieDetail)
-//      console.log(this.reviews)
+      this.movieId = this.$root.$mp.query.id
+      this.getMovieDetail()
     },
     methods: {
-      filterMovieDetail(movieDetail){
+      async getMovieDetail(){
+        wx.showLoading({title: '玩命加载中...'})
+        const movieDetailResult = await request(`/v2/movie/subject/${this.movieId}`)
+        this.movieDetail = this.filterMovieDetail(movieDetailResult)
+        wx.hideLoading()
+
+        const reviewsResult = await request(`/v2/movie/subject/${this.movieId}/reviews`)
+        this.reviews = this.filterMovieReviews(reviewsResult)
+      },
+      filterMovieDetail(data){
         return {
-          id: movieDetail.id,
-          title: movieDetail.title,
-          score: movieDetail.rating.average,
-          image: movieDetail.images.small,
-          mainActors: movieDetail.casts.map(item => { return item.name }),
-          directors: movieDetail.directors.map(item => { return item.name }),
-          summary: movieDetail.summary,
-          countries: movieDetail.countries,
-          trailer_url: movieDetail.trailer_urls[0]
+          id: data.id,
+          title: data.title,
+          score: data.rating.average,
+          image: data.images.small,
+          mainActors: data.casts.map(item => { return item.name }),
+          directors: data.directors.map(item => { return item.name }),
+          summary: data.summary,
+          countries: data.countries,
+          trailer_url: data.trailer_urls[0]
         }
       },
-      filterMovieRevies(movieDetail){
-        return movieDetail.popular_reviews || []
+      filterMovieReviews(data){
+        return data.reviews.map(item => {
+          return {
+            id: item.id,
+            authorAvatar: item.author.avatar,
+            authorName: item.author.name,
+            summary: item.summary,
+            score: item.rating.value
+          }
+        })
       },
-      goToReviewDetail(id){
+      goToReviewDetail(reviewId){
         wx.navigateTo({
-          url: '/pages/reviewDetail/main?id=' + id
+          url: `/pages/reviewDetail/main?movieId=${this.movieId}&reviewId=${reviewId}`
         })
       }
     },
@@ -83,6 +98,9 @@
       Star,
       Reviews,
       SectionHeader
+    },
+    onShareAppMessage (res) {
+      return shareInfo
     }
   }
 </script>
@@ -100,7 +118,7 @@
       height: 100%;
       z-index: -1;
       filter: blur(3px);
-      opacity: .2;
+      opacity: .1;
     }
     .movie-info-wrapper {
       padding: 20px 20px 10px 20px;
@@ -109,10 +127,10 @@
         width: 100%;
       }
       .movie-title {
-        height: 24px;
+        height: 28px;
         text-align: center;
-        line-height: 24px;
-        font-size: 16px;
+        line-height: 28px;
+        font-size: 18px;
         white-space: nowrap;
         text-overflow: ellipsis;
       }
@@ -132,32 +150,39 @@
         }
       }
       .movie-score {
+        margin-top: 10px;
         .star-wrapper {
           float: right;
           display: inline-block;
         }
       }
       .summary {
-        margin-top: 10px;
-        margin-bottom: 14px;
+        margin-top: 20px;
+        margin-bottom: 15px;
         .summary-title {
           font-weight: 600;
           font-size: 14px;
         }
         .summary-text {
           margin-top: 10px;
-          line-height: 16px;
+          line-height: 20px;
           font-size: 12px;
           text-indent: 2em;
           font-weight: normal;
+          color: #353535;
         }
       }
       .video-wrapper {
-        margin-top: 10px;
+        margin-top: 15px;
+        margin-bottom: 15px;
+        width: 100%;
+        #myVideo {
+          width: 100%;
+        }
       }
     }
     .reviews-wrapper {
-      margin-top: 25px;
+      margin-top: 15px;
       width: 100%;
     }
   }
