@@ -4,3 +4,25 @@
 * 采用mpvue框架，mpvue-quickstart初始化项目
 * async/await封装网络请求
 * 图标绘制采用mpvue-echarts
+
+
+
+
+
+
+
+<div align="center">
+<img src="https://github.com/QinZhen001/my-movie/blob/master/screenshot/screenshot1.png" height="450" width="270" >
+
+<img src="https://github.com/QinZhen001/my-movie/blob/master/screenshot/screenshot2.png" height="450" width="270" >
+
+<img src="https://github.com/QinZhen001/my-movie/blob/master/screenshot/screenshot4.png" height="450" width="270" >
+
+</div>
+
+
+
+![小程序演示](https://github.com/QinZhen001/my-movie/blob/master/screenshot/GIF.gif)
+
+
+ 
