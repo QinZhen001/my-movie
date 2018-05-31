@@ -22,7 +22,10 @@
 
 ----------
 
+<div align="center">
 
 ![小程序演示](https://github.com/QinZhen001/my-movie/blob/master/screenshot/GIF.gif)
 
+
+<div/>
 
