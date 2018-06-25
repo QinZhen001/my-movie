@@ -12,12 +12,12 @@ export function request (url, method = 'GET', data, header = {}) {
         if (res.statusCode === 200) {
           resolve(res.data)
         } else {
-          showModal('失败')
+          showModal('Error', '发生未知错误!')
           reject(res.data)
         }
       },
       fail: function () {
-        showModal('获取数据失败!')
+        showModal('Error', '获取数据失败!')
       }
     })
   })
